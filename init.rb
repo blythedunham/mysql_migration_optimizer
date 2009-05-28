@@ -197,6 +197,7 @@ module MySqlMigrationOptimizer
   def primary_column_schema_options(table_name)
 
     primary_column = columns_with_mysql_options(table_name, nil, :conditions => "`Key` = 'PRI'").first
+    return '' if primary_column.nil?
     options = [:type, :limit, :null, :scale].inject({}) do |map, method|
       value = primary_column.send(method)
       map[method] = value if value
